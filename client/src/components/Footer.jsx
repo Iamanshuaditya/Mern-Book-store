@@ -5,8 +5,8 @@ import { FaGoogle } from "react-icons/fa";
 
 export default function Footer() {
   return (
-    <footer className="fixed bottom-0 left-0 w-full font-[nunito-sans]">
-      <div className="flex justify-between px-10 pb-20 items-center">
+    <footer className="  bottom-0 left-0 w-full font-[nunito-sans] mt-40">
+      <div className="flex justify-between px-10 pb-8 items-center mob:flex-col mob:mr-0 mob:ml-20">
         <div className="flex flex-col relative bottom-7 justify-between h-36">
           <div>
             {" "}
@@ -31,7 +31,7 @@ export default function Footer() {
           </ul>
         </div>
         <div className="w-96">
-          <p>
+          <p className="mb-5">
             Subscribe to stay tuned for new product and latest updates. Let’s do
             it!
           </p>
@@ -51,8 +51,8 @@ export default function Footer() {
         </div>
       </div>
       <hr />
-      <div className="footer menu lower flex justify-between font-normal font-[nunito-sans] leading-[24.55px] items-center px-[2.7rem] py-10">
-        <ul className="flex w-[30rem] justify-between">
+      <div className="footer menu lower flex justify-between font-normal font-[nunito-sans] leading-[24.55px] items-center px-[2.7rem] py-5 mob:flex-col mob:gap-7">
+        <ul className="flex w-[30rem] justify-between mob:flex-col mob:items-center mob:gap-8">
           <li>
             <a href="#">Privacy Policy</a>
           </li>
