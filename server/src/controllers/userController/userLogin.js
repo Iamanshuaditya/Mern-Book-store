@@ -6,7 +6,7 @@ const jwtSecretKey = process.env.JWT_SECRET_KEY;
 
 const login = async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { username, password, name } = req.body;
 
     if (!username || !password) {
       return res.status(401).json({ error: "Missing username or password" });
@@ -19,6 +19,7 @@ const login = async (req, res) => {
         {
           username,
           role: "user",
+          name,
         },
         jwtSecretKey,
         {

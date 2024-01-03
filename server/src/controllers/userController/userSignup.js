@@ -25,7 +25,7 @@ const signup = async (req, res) => {
 
     await newUser.save();
 
-    const token = jwt.sign({ username, role: "user" }, jwtSecretKey, {
+    const token = jwt.sign({ username, role: "user", name }, jwtSecretKey, {
       expiresIn: "1h",
     });
 

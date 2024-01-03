@@ -15,13 +15,12 @@ const authenticateJwt = (req, res, next) => {
 
         return res.status(500).json({ message: "Internal Server Error" });
       }
-      console.log("Decoded User:", user);
-
       req.user = user;
+      console.log("Decoded User:", user);
       next();
     });
   } else {
-    res.status(401).json({ message: "No token provided" });
+    return res.status(401).json({ message: "No token provided" });
   }
 };
 

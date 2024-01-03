@@ -35,7 +35,7 @@ export default function SwipeableTemporaryDrawer() {
       onKeyDown={toggleDrawer(false)}
     >
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+        {["Home", "My Books", "Cart", "Setting"].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -48,7 +48,7 @@ export default function SwipeableTemporaryDrawer() {
       </List>
       <Divider />
       <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
+        {["About", "Support", "Tems and Conditions"].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
               <ListItemIcon>

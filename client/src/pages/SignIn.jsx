@@ -48,7 +48,11 @@ export default function SignIn() {
       password: data.get("password"),
     });
     try {
-      const response = await api.post("/login", { username, password });
+      const response = await api.post("/login", {
+        username,
+        password,
+        name: "Anshu",
+      });
       const token = response.data.token;
       localStorage.setItem("token", token);
       console.log("LoggedIn successfully", response.data);
