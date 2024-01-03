@@ -1,5 +1,5 @@
 const path = require("path");
-require("dotenv").config(); // Add this line to load environment variables from the .env file
+require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
@@ -28,7 +28,7 @@ mongoose.connection.on("error", (err) => {
 app.use(express.json());
 app.use(cors());
 
-app.use("/api", userRoutes);
+app.use("/user", userRoutes);
 
 app.use((err, req, res, next) => {
   console.error(err.stack);

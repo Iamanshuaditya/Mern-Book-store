@@ -12,8 +12,7 @@ const login = async (req, res) => {
       return res.status(401).json({ error: "Missing username or password" });
     }
 
-    // Use await to get the actual user data
-    const user = await User.findOne({ username });
+    const user = await User.findOne({ username }).select("-name");
 
     if (user && bcrypt.compareSync(password, user.password)) {
       const token = jwt.sign(

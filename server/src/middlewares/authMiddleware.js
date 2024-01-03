@@ -11,8 +11,11 @@ const authenticateJwt = (req, res, next) => {
         if (err.name === "TokenExpiredError") {
           return res.status(401).json({ message: "Token expired" });
         }
+        console.log("JWT Verification Error:", err);
+
         return res.status(500).json({ message: "Internal Server Error" });
       }
+      console.log("Decoded User:", user);
 
       req.user = user;
       next();

@@ -11,6 +11,9 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import api from "../services/api";
 
 function Copyright(props) {
   return (
@@ -33,13 +36,26 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-  const handleSubmit = (event) => {
+  const navigate = useNavigate();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get("email"),
       password: data.get("password"),
     });
+    try {
+      const response = await api.post("/login", { username, password });
+      const token = response.data.token;
+      localStorage.setItem("token", token);
+      console.log("LoggedIn successfully", response.data);
+      navigate("/");
+    } catch (error) {
+      console.error("LoggedIn failed", error.response.data);
+    }
   };
 
   return (
@@ -75,6 +91,8 @@ export default function SignIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
             <TextField
               margin="normal"
@@ -85,6 +103,8 @@ export default function SignIn() {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -105,7 +125,13 @@ export default function SignIn() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link
+                  href="#"
+                  variant="body2"
+                  onClick={() => {
+                    navigate("/signup");
+                  }}
+                >
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
