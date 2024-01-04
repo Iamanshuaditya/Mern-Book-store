@@ -5,6 +5,7 @@ import SignUp from "./pages/SIgnup";
 import Footer from "./components/Footer";
 import Nav from "./components/Nav";
 import MyBooks from "./pages/MyBooks";
+import CheckoutPage from "./pages/CheckoutPage";
 
 const Layout = ({ children }) => {
   return (
@@ -34,6 +35,14 @@ export default function App() {
           element={
             <Layout>
               <MyBooks />
+            </Layout>
+          }
+        />
+        <Route
+          path="/checkout"
+          element={
+            <Layout>
+              <CheckoutPage />
             </Layout>
           }
         />

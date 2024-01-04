@@ -1,10 +1,11 @@
 import { CiSearch } from "react-icons/ci";
 import Button from "@mui/material/Button";
-import { FaShoppingCart } from "react-icons/fa";
+
 import SwipeableTemporaryDrawer from "./SwipeableDrawer ";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../services/api";
+import TemporaryDrawer from "./Basket";
 
 export default function Nav() {
   const navigate = useNavigate();
@@ -70,9 +71,10 @@ export default function Nav() {
                 Log Out
               </Button>
             </div>
+            <TemporaryDrawer />
           </div>
         ) : (
-          <div className="flex w-1/2 justify-between ">
+          <div className="flex w-[100%] justify-evenly">
             <Button
               variant="contained"
               className="w-15 h-1/2"
@@ -87,13 +89,9 @@ export default function Nav() {
             >
               Login
             </Button>
+            <TemporaryDrawer />
           </div>
         )}
-
-        <button className="h-[2em] w-15 flex items-center justify-between box-border p-5 font-bold font-[nunito-sans] rounded-lg text-[#FFFFFF] bg-[#FFCE1A] border-none">
-          <FaShoppingCart />
-          Basket
-        </button>
       </div>
     </nav>
   );

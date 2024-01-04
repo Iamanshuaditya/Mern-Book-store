@@ -24,16 +24,22 @@ export default function MyBooks() {
   const generateRandomPrice = () => {
     return Math.floor(Math.random() * (100 - 10 + 1)) + 100;
   };
+
+  const handleBookClick = (book) => {
+    console.log("Clicked book ID:", book);
+  };
+
   return (
     <div className="flex flex-wrap m-10">
       {books.map((singleBook) => (
         <div key={singleBook._id} className="m-5">
           <Book
             imagesrc={singleBook["Image-URL-L"]}
-            title={String(singleBook["Book-Title"])}
-            description={String(singleBook["Book-Author"])}
+            title={String(singleBook["Title"])}
+            description={String(singleBook["Authors"])}
             price={generateRandomPrice()}
             sale={generateRandomPrice()}
+            onClick={() => handleBookClick(singleBook)}
           />
         </div>
       ))}

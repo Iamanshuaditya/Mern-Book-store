@@ -13,6 +13,7 @@ import { FaHome } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
 import { ImBooks } from "react-icons/im";
 import { useNavigate } from "react-router-dom";
+import { IoBagCheckOutline } from "react-icons/io5";
 
 import { CiSettings } from "react-icons/ci";
 
@@ -50,6 +51,7 @@ export default function SwipeableTemporaryDrawer() {
       <ListCon text={"Search"} icon={<CiSearch />} />
       <ListCon text={"My Books"} icon={<ImBooks />} />
       <ListCon text={"Setting"} icon={<CiSettings />} />
+      <ListCon text={"Checkout"} icon={<IoBagCheckOutline />} />
       <Divider />
       <List sx={{ marginTop: "15.5em", marginLeft: "3.5em" }}>
         {["About", "Support", "Tems and Conditions"].map((text) => (

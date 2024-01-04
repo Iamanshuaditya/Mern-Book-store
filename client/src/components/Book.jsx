@@ -2,9 +2,12 @@ import { FaShoppingCart } from "react-icons/fa";
 import PropTypes from "prop-types";
 
 export default function Book(props) {
-  const { imagesrc, title, description, price, sale } = props;
+  const { imagesrc, title, description, price, sale, onClick } = props;
   return (
-    <div className="font-[nunito-sans] flex w-[22rem] justify-between">
+    <div
+      className="font-[nunito-sans] flex w-[22rem] justify-between items-center"
+      onClick={onClick}
+    >
       <div>
         {imagesrc && (
           <img
