@@ -9,8 +9,15 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
+import { FaHome } from "react-icons/fa";
+import { CiSearch } from "react-icons/ci";
+import { ImBooks } from "react-icons/im";
+import { useNavigate } from "react-router-dom";
+
+import { CiSettings } from "react-icons/ci";
 
 export default function SwipeableTemporaryDrawer() {
+  const navigate = useNavigate();
   const [state, setState] = React.useState({
     left: false,
   });
@@ -27,6 +34,11 @@ export default function SwipeableTemporaryDrawer() {
     setState({ ...state, left: open });
   };
 
+  function handleClick() {
+    navigate("/signin");
+    toggleDrawer(false)(null);
+  }
+
   const list = () => (
     <Box
       sx={{ width: 250 }}
@@ -34,27 +46,19 @@ export default function SwipeableTemporaryDrawer() {
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
     >
-      <List>
-        {["Home", "My Books", "Cart", "Setting"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <RiMenu2Fill /> : <RiMenu2Fill />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
+      <ListCon text={"Home"} icon={<FaHome />} onClick={handleClick} />
+      <ListCon text={"Search"} icon={<CiSearch />} />
+      <ListCon text={"My Books"} icon={<ImBooks />} />
+      <ListCon text={"Setting"} icon={<CiSettings />} />
       <Divider />
-      <List>
-        {["About", "Support", "Tems and Conditions"].map((text, index) => (
+      <List sx={{ marginTop: "15.5em", marginLeft: "3.5em" }}>
+        {["About", "Support", "Tems and Conditions"].map((text) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <RiMenu2Fill /> : <RiMenu2Fill />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText
+                primary={text}
+                primaryTypographyProps={{ style: { fontSize: "0.8em" } }}
+              />
             </ListItemButton>
           </ListItem>
         ))}
@@ -62,19 +66,36 @@ export default function SwipeableTemporaryDrawer() {
     </Box>
   );
 
+  function ListCon({ text, icon }) {
+    return (
+      <>
+        <List>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>{icon}</ListItemIcon>
+              {text}
+            </ListItemButton>
+          </ListItem>
+        </List>
+      </>
+    );
+  }
+
   return (
-    <div>
-      <Button onClick={toggleDrawer(true)}>
-        <RiMenu2Fill className="h-8 w-8" />
-      </Button>
-      <SwipeableDrawer
-        anchor="left"
-        open={state.left}
-        onClose={toggleDrawer(false)}
-        onOpen={toggleDrawer(true)}
-      >
-        {list()}
-      </SwipeableDrawer>
-    </div>
+    <>
+      <div>
+        <Button onClick={toggleDrawer(true)}>
+          <RiMenu2Fill className="h-8 w-8" />
+        </Button>
+        <SwipeableDrawer
+          anchor="left"
+          open={state.left}
+          onClose={toggleDrawer(false)}
+          onOpen={toggleDrawer(true)}
+        >
+          {list()}
+        </SwipeableDrawer>
+      </div>
+    </>
   );
 }

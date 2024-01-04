@@ -4,6 +4,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SIgnup";
 import Footer from "./components/Footer";
 import Nav from "./components/Nav";
+import MyBooks from "./pages/MyBooks";
 
 const Layout = ({ children }) => {
   return (
@@ -28,6 +29,15 @@ export default function App() {
           }
         />
         <Route path="/signin" element={<SignIn />} />
+        <Route
+          path="/mybooks"
+          element={
+            <Layout>
+              <MyBooks />
+            </Layout>
+          }
+        />
+
         <Route path="/signup" element={<SignUp />} />
       </Routes>
     </Router>

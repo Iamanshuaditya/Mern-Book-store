@@ -1,7 +1,5 @@
 const User = require("../../models/User");
 
-User;
-
 const me = async (req, res) => {
   try {
     const username = req.user.username;

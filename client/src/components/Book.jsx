@@ -6,11 +6,17 @@ export default function Book(props) {
   return (
     <div className="font-[nunito-sans] flex w-[22rem] justify-between">
       <div>
-        <img
-          src={imagesrc}
-          alt="andrew"
-          className="h-[15.625em] w-[11.25em] object-contain"
-        />
+        {imagesrc && (
+          <img
+            src={imagesrc}
+            alt={"bookimage"}
+            className="h-[15.625em] w-[11.25em] object-contain"
+            onError={(e) => {
+              e.target.src =
+                "http://images.amazon.com/images/P/0195153448.01.LZZZZZZZ.jpg";
+            }}
+          />
+        )}
       </div>
       <div className="w-40 pt-[4.1rem] grid justify-center">
         <div>
