@@ -1,9 +1,11 @@
 import Book from "../components/Book";
 import { useEffect, useState } from "react";
 import BookApi from "../services/bookapi";
+import { useMyContext } from "../components/Context";
 
 export default function MyBooks() {
   const [books, setBooks] = useState([]);
+  let { setBookdata } = useMyContext();
 
   useEffect(() => {
     async function fetchBooks() {
@@ -21,28 +23,28 @@ export default function MyBooks() {
     }
     fetchBooks();
   }, []);
-  const generateRandomPrice = () => {
-    return Math.floor(Math.random() * (100 - 10 + 1)) + 100;
-  };
 
   const handleBookClick = (book) => {
     console.log("Clicked book ID:", book);
+    setBookdata(book);
   };
 
   return (
-    <div className="flex flex-wrap m-10">
-      {books.map((singleBook) => (
-        <div key={singleBook._id} className="m-5">
-          <Book
-            imagesrc={singleBook["Image-URL-L"]}
-            title={String(singleBook["Title"])}
-            description={String(singleBook["Authors"])}
-            price={generateRandomPrice()}
-            sale={generateRandomPrice()}
-            onClick={() => handleBookClick(singleBook)}
-          />
-        </div>
-      ))}
-    </div>
+    <>
+      <div className="flex flex-wrap m-10">
+        {books.map((singleBook) => (
+          <div key={singleBook._id} className="m-5">
+            <Book
+              imagesrc={singleBook["Image-URL-L"]}
+              title={String(singleBook["Title"])}
+              description={String(singleBook["Authors"])}
+              price={singleBook["price"]}
+              sale={singleBook["salePrice"]}
+              onClick={() => handleBookClick(singleBook)}
+            />
+          </div>
+        ))}
+      </div>
+    </>
   );
 }

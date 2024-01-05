@@ -66,7 +66,10 @@ export default function Nav() {
               <Button
                 variant="contained"
                 className="w-15 "
-                onClick={() => localStorage.removeItem("token")}
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  navigate("/");
+                }}
               >
                 Log Out
               </Button>

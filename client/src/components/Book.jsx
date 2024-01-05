@@ -3,11 +3,14 @@ import PropTypes from "prop-types";
 
 export default function Book(props) {
   const { imagesrc, title, description, price, sale, onClick } = props;
+  const handleClick = (event) => {
+    console.log("Clicked Add to Basket button");
+    event.stopPropagation();
+    onClick();
+  };
+
   return (
-    <div
-      className="font-[nunito-sans] flex w-[22rem] justify-between items-center"
-      onClick={onClick}
-    >
+    <div className="font-[nunito-sans] flex w-[22rem] justify-between items-center">
       <div>
         {imagesrc && (
           <img
@@ -31,7 +34,10 @@ export default function Book(props) {
               <span className="line-through text-[#6C6C6C]">$ {sale} </span>
             </div>
           </div>
-          <button className="h-[1em] w-15 flex items-center justify-between box-border px-3 py-3 font-bold font-[nunito-sans] rounded-lg text-[#FFFFFF] bg-[#FFCE1A] border-none">
+          <button
+            className="h-[1em] w-15 flex items-center justify-between box-border px-3 py-3 font-bold font-[nunito-sans] rounded-lg text-[#FFFFFF] bg-[#FFCE1A] border-none"
+            onClick={handleClick}
+          >
             <FaShoppingCart />
             Add to Basket
           </button>

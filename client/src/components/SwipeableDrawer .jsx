@@ -18,6 +18,7 @@ import { IoBagCheckOutline } from "react-icons/io5";
 import { CiSettings } from "react-icons/ci";
 
 export default function SwipeableTemporaryDrawer() {
+  const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const [state, setState] = React.useState({
     left: false,
@@ -36,8 +37,8 @@ export default function SwipeableTemporaryDrawer() {
   };
 
   function handleClick() {
-    navigate("/signin");
-    toggleDrawer(false)(null);
+    toggleDrawer(false)();
+    navigate("/");
   }
 
   const list = () => (
@@ -48,10 +49,27 @@ export default function SwipeableTemporaryDrawer() {
       onKeyDown={toggleDrawer(false)}
     >
       <ListCon text={"Home"} icon={<FaHome />} onClick={handleClick} />
-      <ListCon text={"Search"} icon={<CiSearch />} />
-      <ListCon text={"My Books"} icon={<ImBooks />} />
+      <ListCon text={"Search"} icon={<CiSearch onClick={() => {}} />} />
+      <ListCon
+        text={"My Books"}
+        icon={<ImBooks />}
+        onClick={() => {
+          navigate("/mybooks");
+        }}
+      />
       <ListCon text={"Setting"} icon={<CiSettings />} />
-      <ListCon text={"Checkout"} icon={<IoBagCheckOutline />} />
+      <ListCon
+        text={"Checkout"}
+        icon={<IoBagCheckOutline />}
+        onClick={() => navigate("/checkout")}
+      />
+      {!token ? (
+        <ListCon
+          text={"Login"}
+          icon={<IoBagCheckOutline />}
+          onClick={() => navigate("/signin")}
+        />
+      ) : null}
       <Divider />
       <List sx={{ marginTop: "15.5em", marginLeft: "3.5em" }}>
         {["About", "Support", "Tems and Conditions"].map((text) => (
@@ -68,18 +86,16 @@ export default function SwipeableTemporaryDrawer() {
     </Box>
   );
 
-  function ListCon({ text, icon }) {
+  function ListCon({ text, icon, onClick }) {
     return (
-      <>
-        <List>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>{icon}</ListItemIcon>
-              {text}
-            </ListItemButton>
-          </ListItem>
-        </List>
-      </>
+      <List>
+        <ListItem disablePadding>
+          <ListItemButton onClick={onClick}>
+            <ListItemIcon>{icon}</ListItemIcon>
+            <ListItemText>{text}</ListItemText>
+          </ListItemButton>
+        </ListItem>
+      </List>
     );
   }
 

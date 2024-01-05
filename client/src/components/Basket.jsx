@@ -8,11 +8,15 @@ import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-
+import CartItem from "./CartItem";
 import { FaShoppingCart } from "react-icons/fa";
-import Book from "./Book";
+import { useNavigate } from "react-router-dom";
+import { useMyContext } from "./Context";
 
 export default function TemporaryDrawer() {
+  const token = localStorage.getItem("token");
+  const { Bookdata } = useMyContext();
+  const navigate = useNavigate();
   const [state, setState] = React.useState({
     right: false,
   });
@@ -32,24 +36,20 @@ export default function TemporaryDrawer() {
     <Box
       sx={{ width: 350 }}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
         <p className="font-semibold ml-5 mt-5">
-          Shopping Bag <span>(2)</span>
+          Shopping Bag <span>({Object.keys(Bookdata).length})</span>
         </p>
         <ListItem disablePadding>
-          <ListItemButton>
-            <Book />
-            <ListItemText />
-          </ListItemButton>
+          <CartItem />
         </ListItem>
       </List>
       <Divider />
       <List>
-        <p className="font-semibold ml-5 mt-5">
-          Subtotal:<span>(2)</span>
+        <p className="font-semibold ml-5 mt-5 flex justify-between w-[95%]">
+          Subtotal:<span className="mr-5">0</span>
         </p>
         <ListItem disablePadding>
           <ListItemButton>
@@ -58,7 +58,19 @@ export default function TemporaryDrawer() {
           </ListItemButton>
         </ListItem>
         <div className="p-4">
-          <Button color="success" variant="contained" className="w-full">
+          <Button
+            color="success"
+            variant="contained"
+            className="w-full"
+            onClose={toggleDrawer("right", false)}
+            onClick={() => {
+              if (token) {
+                navigate("/checkout");
+              } else {
+                navigate("/signin");
+              }
+            }}
+          >
             Go to checkout
           </Button>
         </div>
