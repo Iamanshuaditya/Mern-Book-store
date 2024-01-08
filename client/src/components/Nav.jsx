@@ -1,46 +1,20 @@
 import { CiSearch } from "react-icons/ci";
 import Button from "@mui/material/Button";
-
 import SwipeableTemporaryDrawer from "./SwipeableDrawer ";
+import { isUserLoading } from "../store/selectors/isUserLoading";
+import { userNamestate } from "../store/selectors/name";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import api from "../services/api";
+import { userState } from "../store/atoms/user";
 import TemporaryDrawer from "./Basket";
+import { useSetRecoilState, useRecoilValue } from "recoil";
 
 export default function Nav() {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
-  const [name, setName] = useState("");
+  const userLoading = useRecoilValue(isUserLoading);
+  const userName = useRecoilValue(userNamestate);
+  const setUser = useSetRecoilState(userState);
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      setLoading(false);
-      console.error("token does not exist");
-      return;
-    }
-
-    const fetchUserData = async () => {
-      try {
-        const response = await api.get("/me", {
-          headers: { authorization: `Bearer ${token}` },
-        });
-        console.log("Response Data:", response.data);
-        const data = response.data;
-        if (data.name) {
-          setName(data.name);
-        }
-      } catch (error) {
-        console.error("Error fetching user data", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUserData();
-  }, []);
-
-  if (loading) {
+  if (userLoading) {
     return <h1>Loading</h1>;
   }
 
@@ -58,17 +32,20 @@ export default function Nav() {
           <CiSearch className="ml-2 bg-[#EAEAEA]" />
         </div>
       </div>
-      <div className="nav-account flex items-center w-[24em] justify-between mob:hidden">
-        {name ? (
-          <div className="flex items-center gap-4">
-            <p className="font-bold">{name}</p>
-            <div>
+      <div className="nav-account flex items-center w-[24em] justify-between ">
+        {userName ? (
+          <div className="flex items-center gap-4 ">
+            <p className="font-bold mob:hidden">{userName}</p>
+            <div className="mob:hidden">
               <Button
                 variant="contained"
                 className="w-15 "
                 onClick={() => {
-                  localStorage.removeItem("token");
-                  navigate("/");
+                  localStorage.removeItem("token", null);
+                  setUser({
+                    isLoading: false,
+                    userName: null,
+                  });
                 }}
               >
                 Log Out

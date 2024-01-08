@@ -11,11 +11,26 @@ import ListItemText from "@mui/material/ListItemText";
 import CartItem from "./CartItem";
 import { FaShoppingCart } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { useMyContext } from "./Context";
-
+import { bookDetails } from "../store/selectors/book";
+import { useRecoilValue } from "recoil";
+import { cartState } from "../store/atoms/cart";
 export default function TemporaryDrawer() {
+  const cartItems = useRecoilValue(cartState);
+  const books = useRecoilValue(bookDetails);
   const token = localStorage.getItem("token");
-  const { Bookdata } = useMyContext();
+  function Subtotal() {
+    let totalPrice = 0;
+    // eslint-disable-next-line no-unused-vars
+    const subtotal = cartItems.map((book) => {
+      totalPrice += book["price"];
+      return totalPrice;
+    });
+
+    return totalPrice;
+  }
+
+  Subtotal();
+
   const navigate = useNavigate();
   const [state, setState] = React.useState({
     right: false,
@@ -40,7 +55,7 @@ export default function TemporaryDrawer() {
     >
       <List>
         <p className="font-semibold ml-5 mt-5">
-          Shopping Bag <span>({Object.keys(Bookdata).length})</span>
+          Shopping Bag <span>({books.length})</span>
         </p>
         <ListItem disablePadding>
           <CartItem />
@@ -49,7 +64,7 @@ export default function TemporaryDrawer() {
       <Divider />
       <List>
         <p className="font-semibold ml-5 mt-5 flex justify-between w-[95%]">
-          Subtotal:<span className="mr-5">0</span>
+          Subtotal:<span className="mr-5">{Subtotal()}</span>
         </p>
         <ListItem disablePadding>
           <ListItemButton>

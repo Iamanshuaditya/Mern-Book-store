@@ -14,6 +14,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import api from "../services/api";
+import { userState } from "../store/atoms/user";
+import { useSetRecoilState } from "recoil";
 
 function Copyright(props) {
   return (
@@ -36,6 +38,7 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+  const setUser = useSetRecoilState(userState);
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -56,6 +59,10 @@ export default function SignIn() {
       const token = response.data.token;
       localStorage.setItem("token", token);
       console.log("LoggedIn successfully", response.data);
+      setUser({
+        isLoading: false,
+        userName: response.data.name,
+      });
       navigate("/");
     } catch (error) {
       console.error("LoggedIn failed", error.response.data);
@@ -133,6 +140,7 @@ export default function SignIn() {
                   href="#"
                   variant="body2"
                   onClick={() => {
+                    window.location.reload();
                     navigate("/signup");
                   }}
                 >

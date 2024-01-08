@@ -5,7 +5,8 @@ import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
 import Grid from "@mui/material/Grid";
 
-import { useMyContext } from "./Context";
+import { useRecoilValue } from "recoil";
+import { cartState } from "../store/atoms/cart";
 
 const addresses = ["1 MUI Drive", "Reactville", "Anytown", "99999", "USA"];
 const payments = [
@@ -27,7 +28,7 @@ export default function Review() {
 
     return totalPrice;
   }
-  const { Bookdata } = useMyContext();
+  const Bookdata = useRecoilValue(cartState);
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>

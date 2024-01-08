@@ -1,30 +1,22 @@
 /* eslint-disable no-unused-vars */
 import PropTypes from "prop-types";
 import { useState } from "react";
-import { useMyContext } from "./Context";
+import { cartState } from "../store/atoms/cart";
+import { useRecoilValue } from "recoil";
+
 import { Divider } from "@mui/material";
 
 export default function CartBook(props) {
+  const cartItems = useRecoilValue(cartState);
+
   const [count, setCount] = useState(1);
-  const { Bookdata } = useMyContext();
+
   function handleIncrement() {
     setCount(() => count + 1);
   }
   function handleDecrement() {
     setCount(() => count - 1);
   }
-  function Subtotal() {
-    let totalPrice = 0;
-
-    const subtotal = Bookdata.map((book) => {
-      totalPrice += book["price"];
-      return totalPrice;
-    });
-
-    return totalPrice * count;
-  }
-
-  Subtotal();
 
   const { imagesrc, title, description, price, sale, onClick } = props;
   return (
@@ -67,9 +59,6 @@ export default function CartBook(props) {
       </div>
       <hr />
       <Divider />
-      <p className="font-semibold ml-5 mt-5 flex justify-between w-[95%]">
-        Subtotal:<span className="mr-5">${Subtotal()}</span>
-      </p>
     </div>
   );
 }

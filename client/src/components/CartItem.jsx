@@ -1,12 +1,14 @@
 import CartBook from "./CartBook";
-import { useMyContext } from "../components/Context";
+import { cartState } from "../store/atoms/cart";
+
+import { useRecoilValue } from "recoil";
 
 export default function CartItem() {
-  const { Bookdata } = useMyContext();
+  const cartItems = useRecoilValue(cartState);
 
-  console.log("Hey i am datafromA", Bookdata);
+  console.log("Hey i am datafromA");
 
-  if (!Bookdata || Object.keys(Bookdata).length === 0) {
+  if (!cartItems || Object.keys(cartItems).length === 0) {
     return (
       <>
         <div className="mt-5">
@@ -20,7 +22,7 @@ export default function CartItem() {
   }
   return (
     <div className="flex flex-col">
-      {Bookdata.map((bookData, _id) => (
+      {cartItems.map((bookData, _id) => (
         <CartBook
           key={_id}
           imagesrc={bookData && bookData["Image-URL-L"]}

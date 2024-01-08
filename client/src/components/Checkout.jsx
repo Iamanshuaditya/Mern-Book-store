@@ -72,7 +72,7 @@ export default function Checkout() {
         }}
       >
         <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap onclick={handleClick}>
+          <Typography variant="h6" color="inherit" noWrap onClick={handleClick}>
             Book Store
           </Typography>
         </Toolbar>
